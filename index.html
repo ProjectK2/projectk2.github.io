@@ -1,16 +1,23 @@
 <!DOCTYPE html>
-<script src="./wasm_exec.js"></script>
-<script>
-    // Polyfill
-    if (!WebAssembly.instantiateStreaming) {
-        WebAssembly.instantiateStreaming = async (resp, importObject) => {
-            const source = await (await resp).arrayBuffer();
-            return await WebAssembly.instantiate(source, importObject);
-        };
-    }
+<html>
 
-    const go = new Go();
-    WebAssembly.instantiateStreaming(fetch("KillTheKaiser_demo.wasm"), go.importObject).then(result => {
-        go.run(result.instance);
-    });
-</script>
+<head>
+    <title>キル・ザ・カイザー体験版</title>
+    <script src="./wasm_exec.js"></script>
+    <script>
+        // Polyfill
+        if (!WebAssembly.instantiateStreaming) {
+            WebAssembly.instantiateStreaming = async (resp, importObject) => {
+                const source = await (await resp).arrayBuffer();
+                return await WebAssembly.instantiate(source, importObject);
+            };
+        }
+
+        const go = new Go();
+        WebAssembly.instantiateStreaming(fetch("KillTheKaiser_demo.wasm"), go.importObject).then(result => {
+            go.run(result.instance);
+        });
+    </script>
+</head>
+
+</html>
